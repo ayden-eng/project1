@@ -138,4 +138,8 @@ def draw():
     if time2 >50:
         Speed += 0.1
         time2 = 0
-    print(Speed)
+  
+#_________________________________________________________________________________\
+      if X or XX or XXX or XXXX < 0:
+        if h <= 400:
+            print("die")
