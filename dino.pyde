@@ -19,6 +19,10 @@ def setup():
     mb_w2 = 6.4
     global mb_h2 #Main menu Help button height
     mb_h2 = 9
+    global ib_w #Instructions page back button width
+    ib_w = 6.4
+    global ib_h #Instructions page back button height
+    ib_h = 9
     global mb1_x #Play button X position
     mb1_x = 640  
     global mb1_y #Play button Y position
@@ -47,7 +51,7 @@ def draw():
     global status,frame,time,Cactus_1,placements,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay
     ###############################################
     global img_logo, img_playbutton, img_helpbutton, logob_w, logob_h #Image Assets UI
-    global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y #Coordinate variables
+    global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
     if (status == 0): #Main Menu
         img_logo = loadImage("Trex.png")
         image(img_logo, 600, 0, width / 4, height / 3)
@@ -189,7 +193,7 @@ def draw():
         
     elif (status == 2): #Instructions
         img_backbutton = loadImage("Trex_Back.png")
-        image(img_backbutton, 666, 800, width / 3.2, height / 6.6)
+        image(img_backbutton, 10, 350, width / ib_w, height / ib_h)
         
     elif (status == 3): #game-over
         fill(200, 100, 5)
@@ -200,25 +204,39 @@ def mousePressed():
     global status
     println((mouseX, mouseY))
     if (status == 0):
-        if ((mouseX > 665 and mouseX < 976) and (mouseY > 292 and mouseY < 448)):
+        if ((mouseX > 642 and mouseX < 763) and (mouseY > 175 and mouseY < 222)):
             status = 1
-        elif ((mouseX > 665 and mouseX < 976) and (mouseY > 452 and mouseY < 598)):
+        elif ((mouseX > 641 and mouseX < 763) and (mouseY > 225 and mouseY < 266)):
             status = 2
+    elif (status == 2):
+        if ((mouseX > 10 and mouseX < 130) and (mouseY > 351 and mouseY < 392)):
+            status = 0
 
 def mouseMoved():
     global status
     global mb_w1
     global mb_w2
-    global mb_h1
+    global mb_h1 
     global mb_h2
+    global ib_w
+    global ib_h
     if (status == 0):
-        if ((mouseX > 665 and mouseX < 976) and (mouseY > 292 and mouseY < 448)):
-            mb_w1 = 6.2
-            mb_h1 = 8.9
-        elif ((mouseX > 665 and mouseX < 976) and (mouseY > 452 and mouseY < 598)):
-            mb_w2 = 3
-            mb_h2 = 6.1
+        if ((mouseX > 642 and mouseX < 763) and (mouseY > 175 and mouseY < 222)):
+            mb_w1 = 6
+            mb_h1 = 8.65
+
+        elif ((mouseX > 641 and mouseX < 763) and (mouseY > 225 and mouseY < 266)):
+            mb_w2 = 6
+            mb_h2 = 8.65
+        else: 
+            mb_w1 = 6.4
+            mb_h1 = 9
+            mb_w2 = 6.4
+            mb_h2 = 9
+    if (status == 2):
+        if ((mouseX > 10 and mouseX < 130) and (mouseY > 351 and mouseY < 392)):
+            ib_w = 6
+            ib_h = 8.65
         else:
-            mb_w1 = 3.2
-    
-            mb_h1 = 6.6    
+            ib_w = 6.4
+            ib_h = 9
