@@ -32,7 +32,7 @@ def setup():
     global mb2_y #Help button Y position
     mb2_y = 225
 frame,time,Running=1,0,True
-placements = [1000,1500,2100,2000,2800,3100,3400]
+placements,placements2,placements3 = [1000,2000,2500],[4500,4900,5000],[5500,5900,6000]
 h = 200
 Run_animation = loadImage("Trex_Run1.png")
 fall = False
@@ -48,7 +48,7 @@ textdisplay = 0
 time2 = 0
 def draw():
     background(0,0)
-    global status,frame,time,Cactus_1,placements,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay
+    global status,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay
     ###############################################
     global img_logo, img_playbutton, img_helpbutton, logob_w, logob_h #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
@@ -83,29 +83,21 @@ def draw():
         X -= Speed
         XX -= Speed
         XXX -= Speed
-        XXXX -= Speed
+        # XXXX -= Speed
         image(Cactus_1,X,200)
         image(Cacti_1,XX,200)
         image(Cacti_2,XXX,200)
-        image(Cacti_3,XXXX,200)
+        # image(Cacti_3,XXXX,200)
         if X <= -100:
-            key1 = random.randint(0,6)
+            key1 = random.randint(0,2)
             X = placements[key1]
         if XX <= -100:
-            key2 =random.randint(0,6)
-            if key2 == key1:
-                key2 =random.randint(0,6)
-            XX = placements[key2]
+            key2 = random.randint(0,2)
+            XX = placements2[key2]
         if XXX <= -100:
-            key3 =random.randint(0,6)
-            if key3 == key1 or key3 == key2:
-                key3 =random.randint(0,6)
-            XXX = placements[key3]
-        if XXXX <= -100:
-            key4 =random.randint(0,6)
-            if key4 == key1 or key4 == key2 or key4 == key1:
-                key4 =random.randint(0,6)
-            XXX = placements[key4]
+            key3 = random.randint(0,2)
+            XXX =placements3[key3]
+        print(X,XX)
     #_______________________________________________________________
         if timer == True:
             Running = False
@@ -119,7 +111,7 @@ def draw():
             if fall == True:
                 if h <= 200:
                     for i in range (1,50):
-                        h += .09
+                        h += .125
                 if h >=200:
                     KEY = "s"
                     Running = True
@@ -182,10 +174,8 @@ def draw():
     
     #_________________________________________________________________________________\
         if X < 80 or XX < 80 or XXX < 80 or XXXX < 80:
-            print(X,XX,XXX,XXXX)
             if h > 172:
                 status = 3
-        print(h)
     elif (status == 2): #Instructions
         img_backbutton = loadImage("Trex_Back.png")
         image(img_backbutton, 10, 350, width / ib_w, height / ib_h)
