@@ -37,7 +37,7 @@ h = 200
 Run_animation = loadImage("Trex_Run1.png")
 fall = False
 timer = False
-Speed = 1
+Speed = 8
 pkey = -1
 key1,key2,key3,key4 = 0,0,0,0
 X,XX,XXX,XXXX = 1000,2000,3000,4000
@@ -183,9 +183,9 @@ def draw():
     #_________________________________________________________________________________\
         if X < 80 or XX < 80 or XXX < 80 or XXXX < 80:
             print(X,XX,XXX,XXXX)
-            if h <= 400:
+            if h > 172:
                 status = 3
-    
+        print(h)
     elif (status == 2): #Instructions
         img_backbutton = loadImage("Trex_Back.png")
         image(img_backbutton, 10, 350, width / ib_w, height / ib_h)
