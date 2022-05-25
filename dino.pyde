@@ -88,20 +88,20 @@ def draw():
         image(Cacti_1,XX,200)
         image(Cacti_2,XXX,200)
         image(Cacti_3,XXXX,200)
-        if X <= -50:
+        if X <= -100:
             key1 = random.randint(0,6)
             X = placements[key1]
-        if XX <= -50:
+        if XX <= -100:
             key2 =random.randint(0,6)
             if key2 == key1:
                 key2 =random.randint(0,6)
             XX = placements[key2]
-        if XXX <= -50:
+        if XXX <= -100:
             key3 =random.randint(0,6)
             if key3 == key1 or key3 == key2:
                 key3 =random.randint(0,6)
             XXX = placements[key3]
-        if XXXX <= -50:
+        if XXXX <= -100:
             key4 =random.randint(0,6)
             if key4 == key1 or key4 == key2 or key4 == key1:
                 key4 =random.randint(0,6)
