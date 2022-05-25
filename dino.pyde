@@ -24,11 +24,11 @@ def setup():
     global ib_h #Instructions page back button height
     ib_h = 9
     global mb1_x #Play button X position
-    mb1_x = 640  
+    mb1_x = 640-622  
     global mb1_y #Play button Y position
     mb1_y = 175
     global mb2_x #Help button X position
-    mb2_x = 640
+    mb2_x = 640-622
     global mb2_y #Help button Y position
     mb2_y = 225
 frame,time,Running=1,0,True
@@ -40,7 +40,7 @@ timer = False
 Speed = 1
 pkey = -1
 key1,key2,key3,key4 = 0,0,0,0
-X,XX,XXX,XXXX = 0,0,0,0
+X,XX,XXX,XXXX = 1000,2000,3000,4000
 score = [0,0,0,0,0,0,0]
 score_number = 0
 score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6=0,0,0,0,0,0,0
@@ -54,7 +54,7 @@ def draw():
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
     if (status == 0): #Main Menu
         img_logo = loadImage("Trex.png")
-        image(img_logo, 600, 0, width / 4, height / 3)
+        image(img_logo, 15, 0, width / 4, height / 3)
         img_playbutton = loadImage("Trex_Play (1).png")
         image(img_playbutton, mb1_x, mb1_y, width / mb_w1, height / mb_h1)
         img_helpbutton = loadImage("Trex_Play (2).png")
@@ -71,8 +71,7 @@ def draw():
             Run_animation = loadImage(w)
             image(Run_animation,10,200)
             if frame > 2:
-                frame = 1
-        print(status)     
+                frame = 1     
 
     
     
@@ -182,15 +181,11 @@ def draw():
             time2 = 0
     
     #_________________________________________________________________________________\
-        if X or XX or XXX or XXXX < 0:
+        if X < 80 or XX < 80 or XXX < 80 or XXXX < 80:
+            print(X,XX,XXX,XXXX)
             if h <= 400:
-                print("die")
-                
-
-     
+                status = 3
     
-   
-        
     elif (status == 2): #Instructions
         img_backbutton = loadImage("Trex_Back.png")
         image(img_backbutton, 10, 350, width / ib_w, height / ib_h)
@@ -202,11 +197,10 @@ def draw():
         
 def mousePressed():
     global status
-    println((mouseX, mouseY))
     if (status == 0):
-        if ((mouseX > 642 and mouseX < 763) and (mouseY > 175 and mouseY < 222)):
+        if ((mouseX > 642-622 and mouseX < 763-622) and (mouseY > 175 and mouseY < 222)):
             status = 1
-        elif ((mouseX > 641 and mouseX < 763) and (mouseY > 225 and mouseY < 266)):
+        elif ((mouseX > 641-622 and mouseX < 763-622) and (mouseY > 225 and mouseY < 266)):
             status = 2
     elif (status == 2):
         if ((mouseX > 10 and mouseX < 130) and (mouseY > 351 and mouseY < 392)):
@@ -221,11 +215,11 @@ def mouseMoved():
     global ib_w
     global ib_h
     if (status == 0):
-        if ((mouseX > 642 and mouseX < 763) and (mouseY > 175 and mouseY < 222)):
+        if ((mouseX > 642-622 and mouseX < 763-622) and (mouseY > 175 and mouseY < 222)):
             mb_w1 = 6
             mb_h1 = 8.65
 
-        elif ((mouseX > 641 and mouseX < 763) and (mouseY > 225 and mouseY < 266)):
+        elif ((mouseX > 641-622 and mouseX < 763-622) and (mouseY > 225 and mouseY < 266)):
             mb_w2 = 6
             mb_h2 = 8.65
         else: 
