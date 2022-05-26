@@ -75,6 +75,8 @@ def draw():
         tint(255,180)
         img_moon = loadImage("Trex_moon.png")
         image(img_moon, 650, 20, width / 8, height / 4)
+        img_stars = loadImage("Trex_Stars.png")
+        image(img_stars, 0, 0)
              
     elif status == 1: #In-game
         KEY = key
