@@ -52,7 +52,7 @@ def draw():
     background(0,0)
     global status,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t
     ###############################################
-    global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3#Image Assets UI
+    global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
     if (status == 0): #Main Menu
         noTint()
@@ -82,26 +82,23 @@ def draw():
             if time >=10:
                 frame += 1
                 time = 0
+            noTint()
             w ="Trex_Run"+str(frame)+".png"
             Run_animation = loadImage(w)
             image(Run_animation,10,200)
             if frame > 2:
                 frame = 1     
-
-    
-    
-    
-    #______________________________________________________________
-        img_floor2 = loadImage("TrexgameFloor.png")
-        image(img_floor2, 0, 285)
     #________________________________________________________________
         X -= Speed
         XX -= Speed
         XXX -= Speed
         # XXXX -= Speed
+        noTint()
         image(Cactus_1,X,200)
         image(Cacti_1,XX,200)
         image(Cacti_2,XXX,200)
+        img_floor2 = loadImage("TrexgameFloor.png")
+        image(img_floor2, 0, 285)
         # image(Cacti_3,XXXX,200)
         if X <= -100:
             key1 = random.randint(0,2)
@@ -193,13 +190,13 @@ def draw():
                 status = 3
     elif (status == 2): #Instructions
         img_backbutton = loadImage("Trex_Back.png")
-        image(img_backbutton, 10, 350, width / ib_w, height / ib_h)
+        image(img_backbutton, 15, 24, width / ib_w, height / ib_h)
         img_howtoplaytitle = loadImage("Trex_HTPtitle.png")
-        image(img_howtoplaytitle, 400, 20, width / 2.5, height / 7.5)
+        image(img_howtoplaytitle, 250, 20, width / 2.5, height / 7.5)
+        img_howtoplaytext = loadImage("Trex_InstructionsText.png")
+        image(img_howtoplaytext, 0, 20)
         
     elif (status == 3): #game-over
-        fill(200, 100, 5)
-        rect(0, 0, 100, 100)
         t -= 1
         tint(255,t)
         image(trex_Extinct,10,h)
@@ -208,6 +205,10 @@ def draw():
         image(Cacti_1,XX,200)
         image(Cacti_2,XXX,200)
         image(img_floor,0,285)
+        fill(255,255,255)
+        textSize(20)
+        textdisplay = str(score[0])+str(score[1])+str(score[2]) +str(score[3]) + str(score[4])+str(score[5]) + str(score[6])
+        text('Final score: ' + textdisplay,400,200)
         
         
 def mousePressed():
@@ -218,22 +219,16 @@ def mousePressed():
         elif ((mouseX > 641-622 and mouseX < 763-622) and (mouseY > 225 and mouseY < 266)):
             status = 2
     elif (status == 2):
-        if ((mouseX > 10 and mouseX < 130) and (mouseY > 351 and mouseY < 392)):
+        if ((mouseX > 10 and mouseX < 130) and (mouseY > 351-330 and mouseY < 392-330)):
             status = 0
 
 def mouseMoved():
     global status
-    global mb_w1
-    global mb_w2
-    global mb_h1 
-    global mb_h2
-    global ib_w
-    global ib_h
+    global mb_w1, mb_w2, mb_h1, mb_h2, ib_w, ib_h
     if (status == 0):
         if ((mouseX > 642-622 and mouseX < 763-622) and (mouseY > 175 and mouseY < 222)):
             mb_w1 = 6
             mb_h1 = 8.65
-
         elif ((mouseX > 641-622 and mouseX < 763-622) and (mouseY > 225 and mouseY < 266)):
             mb_w2 = 6
             mb_h2 = 8.65
@@ -243,7 +238,7 @@ def mouseMoved():
             mb_w2 = 6.4
             mb_h2 = 9
     if (status == 2):
-        if ((mouseX > 10 and mouseX < 130) and (mouseY > 351 and mouseY < 392)):
+        if ((mouseX > 10+5 and mouseX < 130+5) and (mouseY > 351-330 and mouseY < 392-330)):
             ib_w = 6
             ib_h = 8.65
         else:
