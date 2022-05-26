@@ -110,7 +110,15 @@ def draw():
         if XXX <= -100:
             key3 = random.randint(0,2)
             XXX =placements3[key3]
-        
+        if XX - X <= 500 and XX - X >= 0 or XX - X >= -500 and XX-X <=0:
+            key2 = random.randint(0,2)
+            XX = placements2[key2]
+        if XXX - X <= 500 and XXX - X >= 0 or XXX - X >= -500 and XXX-X <=0:
+            key3 = random.randint(0,2)
+            XXX =placements3[key3]
+        if XXX - XX <= 500 and XXX - XX >= 0 or XXX - XX >= -500 and XXX-XX <=0:
+            key3 = random.randint(0,2)
+            XXX =placements3[key3]
     #_______________________________________________________________
         if timer == True:
             Running = False
@@ -135,7 +143,7 @@ def draw():
                     h = 200
                     fall = False
                 image(Run_animation,10,h)
-            print(gravity)
+
     
             
         if keyPressed == True:
