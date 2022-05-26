@@ -48,9 +48,10 @@ score_value0 , score_value1, score_value2, score_value3, score_value4,score_valu
 textdisplay = 0
 time2 = 0
 t = 255
+gravity = 0
 def draw():
     background(0,0)
-    global status,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t
+    global status,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity
     ###############################################
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
@@ -109,21 +110,24 @@ def draw():
         if XXX <= -100:
             key3 = random.randint(0,2)
             XXX =placements3[key3]
-
+        
     #_______________________________________________________________
         if timer == True:
             Running = False
             if fall == False:
                 if h <= 200 and h >= 10:
-                    for i in range (1,50):
-                        h -= .125
+                    for i in range (1,60):
+                        gravity -= 0.0001
+                        h -= gravity
                 image(Run_animation,10,h)
             if h <= 10:        
                 fall = True
+                gravity = 0.03
             if fall == True:
                 if h <= 200:
                     for i in range (1,50):
-                        h += .125
+                        gravity += 0.0002
+                        h += gravity
                 if h >=200:
                     KEY = "s"
                     Running = True
@@ -131,11 +135,12 @@ def draw():
                     h = 200
                     fall = False
                 image(Run_animation,10,h)
-    
+            print(gravity)
     
             
         if keyPressed == True:
             if key == 'w':
+                gravity = 0.190
                 timer = True
     #_____________________________________________________________
         score_number += 0.1
