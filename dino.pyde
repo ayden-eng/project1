@@ -1,16 +1,12 @@
 import random
-add_library('minim')
 def setup():
-    minim = Minim(this)
-    global Cactus_1,Cacti_1,Cacti_2,Cacti_3,trex_Extinct # Sprite image assets
-    global jump_mp3 # Sound effects / music / mp3 audio assets
+    global Cactus_1,Cacti_1,Cacti_2,Cacti_3,trex_Extinct
     size(800,400)
     Cactus_1 = loadImage("Cactus_1.png")
     Cacti_1 = loadImage("Cacti_1.png")
     Cacti_2 = loadImage("Cacti_2.png")
     Cacti_3 = loadImage("Cacti_3.png")
     trex_Extinct = loadImage("Trex_Extinct.png")
-    jump_mp3 = minim.loadFile("TrexJumped.mp3")
     #_____________________________________________________________________________________
     global status
     status = 0 #0 = menu, 1 = in-game, 2 = Instructions, 3 = Death screen
@@ -62,7 +58,6 @@ def draw():
     ###############################################
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
-    global jump_mp3 #Audio assets
     if (status == 0): #Main Menu
         X,XX,XXX,XXXX = 1000,2000,3000,4000
         score = [0,0,0,0,0,0,0]
@@ -165,7 +160,6 @@ def draw():
             if key == 'w':
                 gravity = 0.190
                 timer = True
-                jump_mp3.play()
     #_____________________________________________________________
         score_number += 0.1
         if score_number >= 1:
@@ -211,8 +205,8 @@ def draw():
         text(textdisplay,350,30)
     #_________________________________________________________________________________________
         time2 +=1
-        while Speed_Cap == False:
-            if time2 > 50:
+        if Speed_Cap == False:
+            if time2 >50:
                 Speed += 0.1
                 time2 = 0
        
