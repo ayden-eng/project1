@@ -62,6 +62,7 @@ def draw():
         score = [0,0,0,0,0,0,0]
         t = 255
         score_number = 0
+        Speed = 8
         noTint()
         img_stars = loadImage("Trex_Stars.png")
         image(img_stars, 0, 0)
@@ -261,7 +262,7 @@ def mousePressed():
         if ((mouseX > 10 and mouseX < 130) and (mouseY > 351-330 and mouseY < 392-330)):
             status = 0
     elif (status == 3):
-        if ((mouseX > 368 and mouseY < 429) and (mouseY > 201 and mouseY < 265)):
+        if ((mouseX > 368 and mouseX < 429) and (mouseY > 201 and mouseY < 265)):
             status = 0
 
 def mouseMoved():
@@ -287,7 +288,7 @@ def mouseMoved():
             ib_w = 6.4
             ib_h = 9
     if (status == 3):
-        if ((mouseX > 368 and mouseY < 429) and (mouseY > 201 and mouseY < 265)):
+        if ((mouseX > 368 and mouseX < 429) and (mouseY > 201 and mouseY < 265)):
             restartHoverStatus = 1
         else:
             restartHoverStatus = 0
