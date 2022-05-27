@@ -1,12 +1,16 @@
 import random
+add_library('minim')
 def setup():
     global Cactus_1,Cacti_1,Cacti_2,Cacti_3,trex_Extinct
+    global jump_sound
     size(800,400)
+    minim=Minim(this)
     Cactus_1 = loadImage("Cactus_1.png")
     Cacti_1 = loadImage("Cacti_1.png")
     Cacti_2 = loadImage("Cacti_2.png")
     Cacti_3 = loadImage("Cacti_3.png")
     trex_Extinct = loadImage("Trex_Extinct.png")
+    jump_sound = minim.loadFile("TrexJumped.mp3")
     #_____________________________________________________________________________________
     global status
     status = 0 #0 = menu, 1 = in-game, 2 = Instructions, 3 = Death screen
@@ -57,7 +61,8 @@ def draw():
     global status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
     ###############################################
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
-    global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables
+    global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
+    global jump_sound
     if (status == 0): #Main Menu
         X,XX,XXX,XXXX = 1000,2000,3000,4000
         score = [0,0,0,0,0,0,0]
@@ -160,6 +165,9 @@ def draw():
             if key == 'w':
                 gravity = 0.190
                 timer = True
+                jump_sound.rewind()
+                jump_sound.play()
+            
     #_____________________________________________________________
         score_number += 0.1
         if score_number >= 1:
