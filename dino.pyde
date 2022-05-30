@@ -5,16 +5,17 @@ def setup():
     global jump_sound,death
     size(800,400)
     minim=Minim(this)
+#_____________________________________________________ Cactus images
     Cactus_1 = loadImage("Cactus_1.png")
     Cacti_1 = loadImage("Cacti_1.png")
     Cacti_2 = loadImage("Cacti_2.png")
     Cacti_3 = loadImage("Cacti_3.png")
+#______________________________________________________ Sounds
     trex_Extinct = loadImage("Trex_Extinct.png")
     jump_sound = minim.loadFile("TrexJumped.mp3")
     theme = minim.loadFile("theme.mp3")
     death = minim.loadFile("death.mp3")
-
-    #_____________________________________________________________________________________
+#_____________________________________________________________________________________Variables
     global status
     status = 0 #0 = menu, 1 = in-game, 2 = Instructions, 3 = Death screen
     global play_hover_status
@@ -41,32 +42,32 @@ def setup():
     mb2_y = 225
     global restartHoverStatus # Restart Button hover status
     restartHoverStatus = 0 # 0 = No Hover, 1 = Hover
-frame,time,Running=1,0,True
-placements,placements2,placements3 = [1000,2000,2500],[4500,4900,5000],[5500,5900,6000]
-h = 200
-Run_animation = loadImage("Trex_Run1.png")
-fall = False
-timer = False
-Speed = 8
-pkey = -1
-key1,key2,key3,key4 = 0,0,0,0
-X,XX,XXX,XXXX = 1000,2000,3000,4000
-score = [0,0,0,0,0,0,0]
-real_score = 0
-score_number = 0
-score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6=0,0,0,0,0,0,0
-textdisplay = 0
-time2 = 0
-t = 255
-Speed_Cap = False
-gravity = 0
-highscore = 0
-length1 = 780
+#_________________________________________________________________________________________________
+frame,time,Running=1,0,True # This for the dino run animation
+placements,placements2,placements3 = [1000,2000,2500],[4500,4900,5000],[5500,5900,6000] #these are for the cactus spawn location 
+h = 200 # this is for the dino's height
+Run_animation = loadImage("Trex_Run1.png")#this print the image of the dino
+fall = False # this is when the dino starts to fall or jump
+timer = False #this is to turn on the jump
+Speed = 8 # this determines the speed of the game
+key1,key2,key3,key4 = 0,0,0,0 #this the index for each cactus list
+X,XX,XXX,XXXX = 1000,2000,3000,4000 # this is the cactus X location 
+score = [0,0,0,0,0,0,0] # this is the score
+real_score = 0 # this is for the high score
+score_number = 0 # this adds the score up
+score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6=0,0,0,0,0,0,0 # this is for each score value
+textdisplay = 0 # this displays the score
+time2 = 0 # this is for the speed cap
+t = 255 # this is for t
+Speed_Cap = False # this is speed cap not sure if it works
+gravity = 0 # gravity for jump
+highscore = 0 # highscore
+Sound_ON = False # this play the jump sound
 def draw():
 
     background(0,0)
-    global length1,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
-    ###############################################
+    global Sound_ON,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
+    ############################################### UI Assets 
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
     global jump_sound,theme,death #sounds
@@ -104,6 +105,7 @@ def draw():
         death.pause()
         
     elif status == 1: #In-game
+#_____________________________________________________________________________this plays the run animation 
         KEY = key
         if Running == True:
             time += 1
@@ -116,7 +118,7 @@ def draw():
             image(Run_animation,10,200)
             if frame > 2:
                 frame = 1
-    #________________________________________________________________
+    #________________________________________________________________ Cactus spawing and speed
         X -= Speed
         XX -= Speed
         XXX -= Speed
@@ -137,18 +139,20 @@ def draw():
         if XXX <= -100:
             key3 = random.randint(0,2)
             XXX =placements3[key3]
+#______________________________________________________________________________________This is for if the cactus spawn too close to one another
         if XX - X <= 1000 and XX - X >= 0 or XX - X >= -1000 and XX-X <=0:
             XX = XX + 100
         if XXX - X <= 1000 and XXX - X >= 0 or XXX - X >= -1000 and XXX-X <=0:
             XXX = XXX +100 
         if XXX - XX <= 1000 and XXX - XX >= 0 or XXX - XX >= -1000 and XXX-XX <=0:
             XXX = XXX + 100
-    #_______________________________________________________________
+    #_______________________________________________________________ This plays the jump sound
     
-        if keyPressed == True:
+        if Sound_ON == True:
             jump_sound.rewind()
             jump_sound.play()
-    #________________________________________________________________
+            Sound_ON = False
+    #________________________________________________________________ This is the jump scipt
         if timer == True:
             Running = False
             if fall == False:
@@ -172,7 +176,7 @@ def draw():
                 h = 200
                 fall = False
                 image(Run_animation,10,h)
-    #_____________________________________________________________
+    #_____________________________________________________________ This displays the score 
         score_number += 0.5
         if score_number >= 1:
             score_number = 0
@@ -208,15 +212,18 @@ def draw():
             score[1] = 0
             score_value6 += 1
             score[0] += score_value6 - (score_value6 -1)
-    #-----------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------- # score is displayed here
         fill(255,255,255)
         f = loadFont("OCRAExtended-40.vlw")
         textFont(f)
         textSize(30)
         textdisplay = str(score[0])+str(score[1])+str(score[2]) +str(score[3]) + str(score[4])+str(score[5]) + str(score[6])
-        text("" if highscore == 0 else highscore,700,30)
         text(textdisplay,350,30)
-    #_________________________________________________________________________________________
+        textSize(20)
+        text("" if highscore == 0 else "HighScore",550,30)
+        text("" if highscore == 0 else highscore,700,30)
+    
+    #_________________________________________________________________________________________ # increase speed
         time2 +=1
         if Speed_Cap == False:
             if time2 >50:
@@ -224,10 +231,11 @@ def draw():
                 time2 = 0
        
     
-    #_________________________________________________________________________________
+    #_________________________________________________________________________________# collision system
         if X < 80 or XX < 80 or XXX < 80 or XXXX < 80:
             if h > 172:
                 status = 3
+    #__________________________________________________________________________________________________Help UI
     elif (status == 2): #Instructions
     
         noTint()
@@ -249,7 +257,7 @@ def draw():
             file.write(str(int(max(highscore, real_score))))
             file.close()
             death.loop()
-
+#_______________________________________________________________________Makes the texrex disappear 
         t -= 2
         tint(255,t)
         image(trex_Extinct,10,h)
@@ -260,6 +268,7 @@ def draw():
         image(img_floor,0,285)
         if (t <= 0):
             noTint()
+#________________________________________________________________________________Displays UI
             img_gameovertitle = loadImage("Trex_gameover.png")
             image(img_gameovertitle, 240, 100, width / 2.5, height / 9)
             fill(255,255,255)
@@ -274,7 +283,7 @@ def draw():
             else:
                 img_restartH = loadImage("Restarthover.png")
                 image(img_restartH,367,200, width / 12, height / 6)
-                
+#___________________________________________________________________________________________input decetion             
 def mousePressed():
     global status
     if (status == 0):
@@ -288,7 +297,7 @@ def mousePressed():
     elif (status == 3):
         if ((mouseX > 368 and mouseX < 429) and (mouseY > 201 and mouseY < 265)):
             status = 0
-
+#_____________________________________________________________________________________Collision system for UI
 def mouseMoved():
     global status, restartHoverStatus
     global mb_w1, mb_w2, mb_h1, mb_h2, ib_w, ib_h
@@ -316,16 +325,17 @@ def mouseMoved():
             restartHoverStatus = 1
         else:
             restartHoverStatus = 0
-#_________________________________________________
 #_________________________________________________Speed cap
     if Speed >= 12.6:
         Speed_cap = True
-
-#___________________________________________________
+    print(key)
+#___________________________________________________button dection 
 def keyPressed():
-    
-    global gravity, timer, jump_sound,h
+    global gravity, timer, jump_sound,h,Sound_ON
     if h >=200:
-        gravity = 0.190
-        timer = True
- 
+        if key == "w" or keyCode == 32:
+            if timer == False:
+                gravity = 0.190
+                timer = True
+                Sound_ON = True
+            
