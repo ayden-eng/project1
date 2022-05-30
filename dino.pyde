@@ -1,8 +1,8 @@
 import random
 add_library('minim')
 def setup():
-    global Cactus_1,Cacti_1,Cacti_2,Cacti_3,trex_Extinct
-    global jump_sound
+    global Cactus_1,Cacti_1,Cacti_2,Cacti_3,trex_Extinct,theme
+    global jump_sound,death
     size(800,400)
     minim=Minim(this)
     Cactus_1 = loadImage("Cactus_1.png")
@@ -11,6 +11,9 @@ def setup():
     Cacti_3 = loadImage("Cacti_3.png")
     trex_Extinct = loadImage("Trex_Extinct.png")
     jump_sound = minim.loadFile("TrexJumped.mp3")
+    theme = minim.loadFile("theme.mp3")
+    death = minim.loadFile("death.mp3")
+
     #_____________________________________________________________________________________
     global status
     status = 0 #0 = menu, 1 = in-game, 2 = Instructions, 3 = Death screen
@@ -57,12 +60,14 @@ t = 255
 Speed_Cap = False
 gravity = 0
 def draw():
+
     background(0,0)
     global status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,pkey,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
     ###############################################
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
-    global jump_sound
+    global jump_sound,theme,death #sounds
+    
     if (status == 0): #Main Menu
         X,XX,XXX,XXXX = 1000,2000,3000,4000
         score = [0,0,0,0,0,0,0]
@@ -90,9 +95,10 @@ def draw():
         img_menutrex = loadImage("Trex_Home_Jump.png")
         image(img_menutrex, 200, 200)
         tint(255,180)
+        if theme.isPlaying() == False:
+            theme.loop()
+        death.pause()
         
-        
-             
     elif status == 1: #In-game
         KEY = key
         if Running == True:
@@ -105,7 +111,7 @@ def draw():
             Run_animation = loadImage(w)
             image(Run_animation,10,200)
             if frame > 2:
-                frame = 1     
+                frame = 1
     #________________________________________________________________
         X -= Speed
         XX -= Speed
@@ -127,14 +133,18 @@ def draw():
         if XXX <= -100:
             key3 = random.randint(0,2)
             XXX =placements3[key3]
-        if XX - X <= 500 and XX - X >= 0 or XX - X >= -500 and XX-X <=0:
+        if XX - X <= 1000 and XX - X >= 0 or XX - X >= -1000 and XX-X <=0:
             XX = XX + 100
-        if XXX - X <= 500 and XXX - X >= 0 or XXX - X >= -500 and XXX-X <=0:
+        if XXX - X <= 1000 and XXX - X >= 0 or XXX - X >= -1000 and XXX-X <=0:
             XXX = XXX +100 
-        if XXX - XX <= 500 and XXX - XX >= 0 or XXX - XX >= -500 and XXX-XX <=0:
+        if XXX - XX <= 1000 and XXX - XX >= 0 or XXX - XX >= -1000 and XXX-XX <=0:
             XXX = XXX + 100
-
     #_______________________________________________________________
+    
+        if keyPressed == True:
+            jump_sound.rewind()
+            jump_sound.play()
+    #________________________________________________________________
         if timer == True:
             Running = False
             if fall == False:
@@ -151,25 +161,15 @@ def draw():
                     for i in range (1,50):
                         gravity += 0.0002
                         h += gravity
-                if h >=200:
-                    KEY = "s"
-                    Running = True
-                    timer = False
-                    h = 200
-                    fall = False
+            if h >=200:
+                KEY = "s"
+                Running = True
+                timer = False
+                h = 200
+                fall = False
                 image(Run_animation,10,h)
-
-    
-            
-        if keyPressed == True:
-            if key == 'w':
-                gravity = 0.190
-                timer = True
-                jump_sound.rewind()
-                jump_sound.play()
-            
     #_____________________________________________________________
-        score_number += 0.1
+        score_number += 0.5
         if score_number >= 1:
             score_number = 0
             score_value0 += 1
@@ -224,6 +224,7 @@ def draw():
             if h > 172:
                 status = 3
     elif (status == 2): #Instructions
+    
         noTint()
         img_backbutton = loadImage("Trex_Back.png")
         image(img_backbutton, 15, 24, width / ib_w, height / ib_h)
@@ -233,6 +234,10 @@ def draw():
         image(img_howtoplaytext, 0, 20)
         
     elif (status == 3): #game-over
+        theme.pause()
+        if death.isPlaying() == False:
+            death.loop()
+        
         t -= 2
         tint(255,t)
         image(trex_Extinct,10,h)
@@ -257,8 +262,7 @@ def draw():
             else:
                 img_restartH = loadImage("Restarthover.png")
                 image(img_restartH,367,200, width / 12, height / 6)
-            
-        
+                
 def mousePressed():
     global status
     println(str(mouseX) + ',' + str(mouseY))
@@ -306,3 +310,11 @@ def mouseMoved():
     if Speed >= 12.6:
         Speed_cap = True
         print("ok")
+#___________________________________________________
+def keyPressed():
+    
+    global gravity, timer, jump_sound,h
+    if h >=200:
+        gravity = 0.190
+        timer = True
+ 
