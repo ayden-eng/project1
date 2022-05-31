@@ -65,10 +65,11 @@ Speed_Cap = False # this is speed cap not sure if it works
 gravity = 0 # gravity for jump
 highscore = 0 # highscore
 Sound_ON = False # this play the jump sound
+floorXX = 805 # for the floor animation
 def draw():
 
     background(0,0)
-    global Sound_ON,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
+    global floorXX,Sound_ON,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
     ############################################### UI Assets 
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
@@ -109,6 +110,7 @@ def draw():
         
     elif status == 1: #In-game
 #_____________________________________________________________________________this plays the run animation 
+        background(0,0,0)
         KEY = key
         if Running == True:
             time += 1
@@ -130,8 +132,6 @@ def draw():
         image(Cactus_1,X,200)
         image(Cacti_1,XX,200)
         image(Cacti_2,XXX,200)
-        img_floor2 = loadImage("TrexgameFloor.png")
-        image(img_floor2, 0, 285)
         # image(Cacti_3,XXXX,200)
         if X <= -100:
             key1 = random.randint(0,2)
@@ -239,16 +239,18 @@ def draw():
             if h > 172:
                 status = 3
      
-    #______________________________________________________________                      
-        if status == 1:
-            img_floorMove = loadImage("TrexgameFloor.png")
-            image(img_floorMove, floorX, 285)
-            while status == 1:
-                println(floorX)
-                if (floorX >= 800):
-                    floorX = 0
-                else:
-                    floorX = floorX + 0.01        
+    #______________________________________________________________      
+        floorX -= Speed
+        floorXX -= Speed
+        if floorX <= -800:
+            floorX = 800
+        if floorXX <= -800:
+            floorXX = 800
+        image(img_floor,0, 285)
+        image(img_floor,floorX, 285)
+        image(img_floor,floorXX, 285)
+    
+    
     #__________________________________________________________________________________________________Help UI
     elif (status == 2): #Instructions
     
@@ -353,10 +355,4 @@ def keyPressed():
                 timer = True
                 Sound_ON = True
 
-def floorAnimation():
-    global floorX
-    global status
-    global Speed_Cap
-    global time2
-    global Speed
            
