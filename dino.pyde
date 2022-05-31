@@ -3,6 +3,8 @@ add_library('minim')
 def setup():
     global Cactus_1,Cacti_1,Cacti_2,Cacti_3,trex_Extinct,theme
     global jump_sound,death
+    global floorX
+    floorX = 0
     size(800,400)
     minim=Minim(this)
 #_____________________________________________________ Cactus images
@@ -71,7 +73,7 @@ def draw():
     global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
     global jump_sound,theme,death #sounds
-    
+    global floorX
     if (status == 0): #Main Menu
         X,XX,XXX,XXXX = 1000,2000,3000,4000
         score = [0,0,0,0,0,0,0]
@@ -102,6 +104,7 @@ def draw():
         tint(255,180)
         if theme.isPlaying() == False:
             theme.loop()
+        death.rewind()
         death.pause()
         
     elif status == 1: #In-game
@@ -235,6 +238,17 @@ def draw():
         if X < 80 or XX < 80 or XXX < 80 or XXXX < 80:
             if h > 172:
                 status = 3
+     
+    #______________________________________________________________                      
+        if status == 1:
+            img_floorMove = loadImage("TrexgameFloor.png")
+            image(img_floorMove, floorX, 285)
+            while status == 1:
+                println(floorX)
+                if (floorX >= 800):
+                    floorX = 0
+                else:
+                    floorX = floorX + 0.01        
     #__________________________________________________________________________________________________Help UI
     elif (status == 2): #Instructions
     
@@ -256,7 +270,7 @@ def draw():
             file = open("highscore.txt", "w")
             file.write(str(int(max(highscore, real_score))))
             file.close()
-            death.loop()
+            death.play()
 #_______________________________________________________________________Makes the texrex disappear 
         t -= 2
         tint(255,t)
@@ -338,4 +352,11 @@ def keyPressed():
                 gravity = 0.190
                 timer = True
                 Sound_ON = True
-            
+
+def floorAnimation():
+    global floorX
+    global status
+    global Speed_Cap
+    global time2
+    global Speed
+           
