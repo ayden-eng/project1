@@ -66,12 +66,13 @@ gravity = 0 # gravity for jump
 highscore = 0 # highscore
 Sound_ON = False # this play the jump sound
 floorXX = 805 # for the floor animation
+flash,timer3,n = True,True,0 #flash animation
 def draw():
 
     background(0,0)
     global floorXX,Sound_ON,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
     ############################################### UI Assets 
-    global img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
+    global n,flash,timer3,img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
     global jump_sound,theme,death #sounds
     global floorX
@@ -286,13 +287,29 @@ def draw():
             noTint()
 #________________________________________________________________________________Displays UI
             img_gameovertitle = loadImage("Trex_gameover.png")
+            if timer3 == True:
+                text('Final score: ',280,180)
+                for i in range(1,200):
+                    n += 0.001
+                    print(n)
+                    if n >= 2.5:
+                        n = 0 
+                        timer3 = False
+            if timer3 == False:
+                for i in range(1,200):
+                    n += 0.001
+                    print(n)
+                    if n >= 2.5:
+                        n = 0 
+                        timer3 = True
+        
             image(img_gameovertitle, 240, 100, width / 2.5, height / 9)
             fill(255,255,255)
             f = loadFont("OCRAExtended-40.vlw")
             textFont(f)
             textSize(20)
             textdisplay = str(score[0])+str(score[1])+str(score[2]) +str(score[3]) + str(score[4])+str(score[5]) + str(score[6])
-            text('Final score: ' + textdisplay,280,180)
+            text(textdisplay,430,180)
             if (restartHoverStatus == 0):
                 img_restart = loadImage("Restart.png")
                 image(img_restart,367,200, width / 12, height / 6)
