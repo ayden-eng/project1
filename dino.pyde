@@ -68,7 +68,6 @@ Sound_ON = False # this play the jump sound
 floorXX = 805 # for the floor animation
 flash,timer3,n = True,True,0 #flash animation
 def draw():
-
     background(0,0)
     global floorXX,Sound_ON,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
     ############################################### UI Assets 
@@ -84,10 +83,8 @@ def draw():
         real_score = 0
         Speed = 8
         noTint()
-        img_stars = loadImage("Trex_Stars.png")
-        image(img_stars, 0, 0)
-        img_moon = loadImage("Trex_moon.png")
-        image(img_moon, 650, 20, width / 8, height / 4)
+        img_background = loadImage("TrexSky.png")
+        image(img_background, 0, 0)
         img_logo = loadImage("Trex.png")
         image(img_logo, 15, -20, width / 4, height / 2)
         img_playbutton = loadImage("Trex_Play (1).png")
@@ -96,9 +93,7 @@ def draw():
         image(img_helpbutton, mb2_x, mb2_y, width / mb_w2, height / mb_h2)
         fill(117, 117, 117)
         rect(0,285,800,200)
-        tint(17, 102, 0)
         image(Cacti_3, 500, 200)
-        noTint()
         img_floor = loadImage("TrexgameFloor.png")
         image(img_floor, 0, 285)
         img_menutrex = loadImage("Trex_Home_Jump.png")
@@ -111,7 +106,8 @@ def draw():
         
     elif status == 1: #In-game
 #_____________________________________________________________________________this plays the run animation 
-        background(0,0,0)
+        img_background = loadImage("TrexSky.png")
+        image(img_background, 0, 0)
         KEY = key
         if Running == True:
             time += 1
@@ -129,7 +125,6 @@ def draw():
         XX -= Speed
         XXX -= Speed
         # XXXX -= Speed
-        noTint()
         image(Cactus_1,X,200)
         image(Cacti_1,XX,200)
         image(Cacti_2,XXX,200)
@@ -254,7 +249,6 @@ def draw():
     
     #__________________________________________________________________________________________________Help UI
     elif (status == 2): #Instructions
-    
         noTint()
         img_backbutton = loadImage("Trex_Back.png")
         image(img_backbutton, 15, 24, width / ib_w, height / ib_h)
@@ -264,6 +258,9 @@ def draw():
         image(img_howtoplaytext, 0, 20)
         
     elif (status == 3): #game-over
+        noTint()
+        img_background = loadImage("TrexSky.png")
+        image(img_background, 0, 0)
         theme.pause()
         real_score = int(str(score[0]) + str(score[1]) + str(score[2]) + str(score[3]) + str(score[4]) + str(score[5]) + str(score[6]))
         if death.isPlaying() == False:
@@ -303,6 +300,7 @@ def draw():
                         n = 0 
                         timer3 = True
         
+            
             image(img_gameovertitle, 240, 100, width / 2.5, height / 9)
             fill(255,255,255)
             f = loadFont("OCRAExtended-40.vlw")
@@ -361,7 +359,7 @@ def mouseMoved():
 #_________________________________________________Speed cap
     if Speed >= 12.6:
         Speed_cap = True
-    print(key)
+
 #___________________________________________________button dection 
 def keyPressed():
     global gravity, timer, jump_sound,h,Sound_ON
