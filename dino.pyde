@@ -44,6 +44,8 @@ def setup():
     mb2_y = 225
     global restartHoverStatus # Restart Button hover status
     restartHoverStatus = 0 # 0 = No Hover, 1 = Hover
+    global img_background
+    img_background = loadImage("TrexSky.png")
 #_________________________________________________________________________________________________
 frame,time,Running=1,0,True # This for the dino run animation
 placements,placements2,placements3 = [1000,2000,2500],[4500,4900,5000],[5500,5900,6000] #these are for the cactus spawn location 
@@ -71,7 +73,7 @@ def draw():
     background(0,0)
     global floorXX,Sound_ON,highscore,real_score, status,restartHoverStatus,frame,time,Cactus_1,placements,placements2,placements3,Running,h,Run_animation,fall,timer,time2,Speed,Cacti_1,Cacti_2,Cacti_3,key1,key2,key3,key4,X,XX,XXX,XXXX,score,score_number,score_value0 , score_value1, score_value2, score_value3, score_value4,score_value5,score_value6,textdisplay,trex_Extinct,t,gravity,Speed_Cap
     ############################################### UI Assets 
-    global n,flash,timer3,img_logo, img_playbutton, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
+    global n,flash,timer3,img_logo, img_playbutton, img_background, img_helpbutton, img_howtoplaytitle, logob_w, logob_h, Cacti_3, img_floor #Image Assets UI
     global mb_w1, mb_w2, mb_h1, mb_h2, mb1_x, mb1_y, ib_w, ib_h #Coordinate variables'
     global jump_sound,theme,death #sounds
     global floorX
@@ -106,7 +108,6 @@ def draw():
         
     elif status == 1: #In-game
 #_____________________________________________________________________________this plays the run animation 
-        img_background = loadImage("TrexSky.png")
         image(img_background, 0, 0)
         KEY = key
         if Running == True:
